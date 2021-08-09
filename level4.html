@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://unpkg.com/xp.css">
+        <script src="Common.js"></script>
+        <script>
+            function Calc() {
+                const numInputs = Array.from(document.getElementsByClassName("inptnum"));
+                const resInput = document.getElementById("resultinput");
+                const resLabel = document.getElementById("resultlabel");
+                let labelTxt = "O maior número dentre os informados é:";
+                let nums = [];
+                let maiorNum;
+
+                numInputs.forEach((input, pos) => {
+                    if(isNaN(parseInt(input.value))){
+                        input.value = 0;
+                    }
+                    nums.push(parseInt(input.value));
+                });
+
+                nums.forEach((num, pos) => {
+                    if(pos == 0 || num > maiorNum){
+                        maiorNum = num;
+                    }
+                });
+                
+                resLabel.innerHTML = labelTxt;
+                resInput.value = maiorNum;
+                window.setTimeout(() => 
+                    alert(labelTxt + " " + maiorNum)
+                );
+            }
+
+            function RemoveInput() {
+                const numInputs = document.getElementsByClassName("numinput");
+                const lastInput = numInputs[(numInputs.length - 1)];
+                if(!(numInputs.length <= 2)){ lastInput.remove(); }
+            }
+
+            function AddInput() {
+                const inputsForm = document.getElementsByClassName("inputsform")[0];
+                const numInputs = document.getElementsByClassName("numinput");
+                const lastInput = numInputs[(numInputs.length - 1)];
+                const newInputDiv = lastInput.cloneNode(true);
+                const newInputId = "num" + (numInputs.length + 1);
+                const newLabel = newInputDiv.childNodes[1];
+                const newInput = newInputDiv.childNodes[3];
+                
+                newLabel.innerHTML = (numInputs.length + 1) + "º número:";
+                newLabel.htmlFor = newInputId;
+                newInput.id = newInputId;
+                newInput.value = "";
+                
+                inputsForm.appendChild(newInputDiv);
+            }
+        </script>
+        <style>
+            html *{
+                font-size: 1.05em;
+                text-align: center;
+            }
+            body {
+                background-image: url("https://wallpapercave.com/wp/hN0TnNU.jpg");
+            }
+            input, label, button {
+                padding: .4em;
+                outline: none;
+            }
+            .container, .window-body {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+                min-width: 20vw;
+            }
+            .container {
+                min-height: 90vh;
+            }
+            .window-body::before {
+                top: 45%;
+                left: 15%;
+                width: 100px;
+                height: 100px;
+                background: url("konata.png") no-repeat;
+            }
+            .window-body::after {
+                top: 60%;
+                right: 15%;
+                width: 200px;
+                height: 200px;
+                background: url("kanata.png") no-repeat;
+            }
+            .window-body::before, .window-body::after {
+                content: "";
+                position: absolute;
+                background-size: contain;
+            }
+            .numinput, .inputsform, .window-body {
+                display: flex;
+                flex-direction: column;
+            }
+            .numinput {
+                margin: .5em;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="window">
+                <div class="title-bar">
+                  <div class="title-bar-text">
+                    Verificar qual é o maior número
+                  </div>
+                </div>
+                <div class="window-body">
+                    <form class="inputsform">
+                        <div class="numinput">
+                            <label for="num1">1º número:</label>
+                            <input id="num1" type="number" class="inptnum">
+                        </div>
+                        <div class="numinput">
+                            <label for="num2">2º número:</label>
+                            <input id="num2" type="number" class="inptnum">
+                        </div>
+                        <div class="numinput">
+                            <label for="num3">3º número:</label>
+                            <input id="num3" type="number" class="inptnum">
+                        </div>
+                    </form>
+
+                    <button type="button" class="rmbtn" onclick="RemoveInput()">-</button>
+                    <button type="button" class="addbtn" onclick="AddInput()">+</button>
+                    <button type="button" class="calcbtn" onclick="Calc()">Verificar</button>
+
+                    <label for="resultinput" id="resultlabel">Resultado:</label>
+                    <input type="number" class="resultinput" id="resultinput">
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

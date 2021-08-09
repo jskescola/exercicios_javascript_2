@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+        function BtnClick() {
+            const btn = document.getElementById("btn");
+            const tohru = document.getElementsByClassName("imgh")[0];
+
+            btn.style.display = "none";
+            tohru.style.display = "block";
+
+            window.setTimeout(() => {
+                if (window.confirm("Deseja ir para a próxima página?")) {
+                    document.location = 'level2.html';
+                } else {
+                    btn.style.display = "block";
+                    tohru.style.display = "none";
+                }
+            });
+        }
+    </script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+        }
+
+        button {
+            width: 50vw;
+            height: 25vw;
+            font-size: calc((0.5vw + 0.25vw) / 2 * 20);
+            margin: 20vh auto;
+        }
+
+        .imgh {
+            display: none;
+            position: absolute;
+            width: 40%;
+            bottom: 0;
+            overflow: hidden;
+        }
+
+        .imgh img {
+            position: relative;
+            width: 100%;
+            bottom: -1em;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="btn" onclick="BtnClick()">Me Clique!</button>
+    <div class="imgh"><img src="tohru.png"></div>
+</body>
+
+</html>

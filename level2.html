@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            * { 
+                font-family: 'Segoe Script', sans-serif; 
+                text-align: center; 
+                text-shadow: .1em .1em 8px rgba(0, 0, 0, 0.3);
+            }
+            html, body {
+                margin: 0;
+                height: 100%;
+            }
+            body {
+                background-image: url(paper.jpg);
+                background-position-y: -10em;
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+            .container {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                width: 86%;
+                margin: 0 auto;
+                align-items: center;
+            }
+            .title {
+                text-align: center;
+                margin-top: 4em; 
+            }
+            .title::before {
+                top: 40%;
+                left: 15%;
+                background: url("suzumiya.png") no-repeat;
+            }
+            .title::after {
+                top: 65%;
+                right: 15%;
+                background: url("yuki.png") no-repeat;
+            }
+            .title::before, .title::after {
+                content: "";
+                position: absolute;
+                width: 150px;
+                height: 150px;
+                background-size: contain;
+            }
+            .form {
+                display: flex;
+                flex-direction: column;
+            }
+            .ageinput {
+                font-size: 2em;
+                margin: 0 0 .5em 0;
+                text-align: center;
+                background: transparent;
+                border: none;
+                border-bottom: 2px solid blue;
+                outline: none;
+            }
+            .subbtn {
+                font-size: 2em;
+                border: none;
+                cursor: pointer;
+                background: transparent;
+                text-decoration: underline;
+            }
+            .result {
+                display: none;
+                padding: 0 1em;
+                font-size: 1.4em;
+                border: 2px solid blue;
+            }
+            .result :last-child {
+                text-decoration: underline;
+            }
+            .gobtn {
+                display: none;
+            }
+        </style>
+        <script>
+            function Submit() {
+                const gobtn = document.getElementsByClassName("gobtn")[0];
+                const subbtn = document.getElementsByClassName("subbtn")[0];
+                const rst = document.getElementById("rst");
+                const result = document.getElementsByClassName("result")[0];
+                const ageinput = document.getElementsByClassName("ageinput")[0];
+                const age = ageinput.value;
+
+                if(age != '') {
+                    let ageTxt;
+
+                    if(age >= 18){
+                        ageTxt = "Você é MAIOR de idade!";
+                    } else {
+                        ageTxt = "Você é MENOR de idade!";
+                    }
+
+                    rst.innerHTML = ageTxt;
+                    ageinput.disabled = true;
+                    subbtn.style.display = "none";
+                    result.style.display = "initial";
+                    gobtn.style.display = "initial";
+                } else {
+                    alert("Digite a sua idade!");
+                }
+            }
+
+            function GoNext() { document.location = 'level3.html'; }
+        </script>
+    </head>
+
+    <body>
+        <div class="container">
+            <h1 class="title">Deseja saber se é maior de idade? <br> Digite sua idade abaixo e clique em verificar! </h1>
+            
+            <form class="form">
+                <input class="ageinput" type="number">
+                <button type="button" class="subbtn" onclick="Submit()">Verificar</button>
+            </form>
+
+            <div class="result">
+                <h2>Resultado:</h2>
+                <h2 id="rst">Você é MENOR de idade!</h2>
+            </div>
+
+            <button class="subbtn gobtn" onclick="GoNext()">Ir para a próxima página >></button>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://unpkg.com/98.css">
+        <script>
+            function Calc() {
+                const numInputs = Array.from(document.getElementsByClassName("inptnum"));
+                const resInput = document.getElementById("resultinput");
+                const resLabel = document.getElementById("resultlabel");
+                let labelTxt = "A média entre";
+                let nums = [];
+                let media = 0;
+                let n = 0;
+
+                numInputs.forEach((input, pos) => {
+                    if(isNaN(parseInt(input.value))){
+                        input.value = 0;
+                    }
+                    nums.push(parseInt(input.value));
+                });
+
+                nums.forEach((num, pos) => {
+                    n += num;
+
+                    switch (pos) {
+                        case (nums.length - 2):
+                            labelTxt += ` ${num} e`;
+                            break;
+                        case (nums.length - 1):
+                            labelTxt += ` ${num} `;
+                            break;
+                        default:
+                            labelTxt += ` ${num},`;
+                            break;
+                    }
+                });
+
+                media = n / nums.length;
+                labelTxt += "equivale à: ";
+                
+                resLabel.innerHTML = labelTxt;
+                resInput.value = media;
+                document.getElementsByClassName("nextpage")[0].style.display = "block";
+            }
+
+            function RemoveInput() {
+                const numInputs = document.getElementsByClassName("numinput");
+                const lastInput = numInputs[(numInputs.length - 1)];
+                if(!(numInputs.length <= 2)){ lastInput.remove(); }
+            }
+
+            function AddInput() {
+                const inputsForm = document.getElementsByClassName("inputsform")[0];
+                const numInputs = document.getElementsByClassName("numinput");
+                const lastInput = numInputs[(numInputs.length - 1)];
+                const newInputDiv = lastInput.cloneNode(true);
+                const newInputId = "num" + (numInputs.length + 1);
+                const newLabel = newInputDiv.childNodes[1];
+                const newInput = newInputDiv.childNodes[3];
+                
+                newLabel.innerHTML = (numInputs.length + 1) + "º número:";
+                newLabel.htmlFor = newInputId;
+                newInput.id = newInputId;
+                newInput.value = "";
+                
+                inputsForm.appendChild(newInputDiv);
+            }
+        </script>
+        <style>
+            html *{
+                font-size: 1.05em;
+                text-align: center;
+            }
+            body {
+                background-color: #008080;
+            }
+            input, label, button {
+                padding: .4em;
+                outline: none;
+            }
+            .container, .window-body {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+                min-width: 20vw;
+            }
+            .container {
+                min-height: 90vh;
+            }
+            .window-body::before {
+                top: 1em;
+                background: url("bin.png") no-repeat; /* recicle bin */
+            }
+            .window-body::after {
+                top: 10em;
+                background: url("compt.png") no-repeat;
+            }
+            .window-body::before, .window-body::after {
+                content: "";
+                position: absolute;
+                left: 2em;
+                width: 80px;
+                height: 80px;
+                background-size: contain;
+                z-index: -1;
+            }
+            .numinput, .inputsform, .window-body {
+                display: flex;
+                flex-direction: column;
+            }
+            .numinput {
+                margin: .5em;
+            }
+            .nextpage {
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="window">
+                <div class="title-bar">
+                  <div class="title-bar-text">
+                    Calcular Média
+                  </div>
+                </div>
+                <div class="window-body">
+                    <form class="inputsform">
+                        <div class="numinput">
+                            <label for="num1">1º número:</label>
+                            <input id="num1" type="number" class="inptnum">
+                        </div>
+                        <div class="numinput">
+                            <label for="num2">2º número:</label>
+                            <input id="num2" type="number" class="inptnum">
+                        </div>
+                        <div class="numinput">
+                            <label for="num3">3º número:</label>
+                            <input id="num3" type="number" class="inptnum">
+                        </div>
+                    </form>
+
+                    <button type="button" class="rmbtn" onclick="RemoveInput()">-</button>
+                    <button type="button" class="addbtn" onclick="AddInput()">+</button>
+                    <button type="button" class="calcbtn" onclick="Calc()">Calcular</button>
+
+                    <label for="resultinput" id="resultlabel">Resultado:</label>
+                    <input type="number" class="resultinput" id="resultinput">
+                </div>
+
+                <div class="window nextpage">
+                    <a href="level4.html">Próxima Página >></a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
